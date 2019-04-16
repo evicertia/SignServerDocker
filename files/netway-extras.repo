@@ -1,0 +1,8 @@
+[netway-extras]
+name=netway-extras (el6)
+baseurl=https://dev.crt0.net/packages/netway/extras/el$releasever/$basearch
+failovermethod=priority
+enabled=0
+gpgcheck=1
+gpgkey=https://dev.crt0.net/packages/netway/NW-GPG-KEY
+priority=10
