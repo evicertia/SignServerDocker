@@ -17,6 +17,9 @@ die () {
 }
 
 setup_server () {
+	cat >| /etc/signserver/signserver.conf <<-_EOF
+	SIGNSERVER_NODEID = ${SIGNSERVER_NODEID:-localhost}
+	_EOF
 	pushd /var/lib/jbossas/server/default
 	rm -f log
 	mkdir -p /data/logs
