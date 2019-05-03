@@ -18,7 +18,7 @@ $Id: signserver-ds.xml,v 1.2 2007-12-08 07:51:28 herrvendil Exp $
       <!-- Datasources are not available outside the virtual machine -->
       <jndi-name>SignServerDS</jndi-name>
 
-      <connection-url>jdbc:hsqldb:${jboss.server.data.dir}${/}hypersonic${/}SignServerLocalDB</connection-url>
+      <connection-url>jdbc:hsqldb:${/}data${/}SignServerLocalDB</connection-url>
 
       <!-- The driver class -->
       <driver-class>org.hsqldb.jdbcDriver</driver-class>
