@@ -35,7 +35,7 @@ ADD files/signserver.settings /etc/sysconfig/signserver
 
 RUN mkdir -p /opt/utimaco/p11
 ADD files/libcs_pkcs11* /opt/utimaco/p11/
-RUN ln -s /opt/utimaco/p11/libcs_pkcs11_R2.so /opt/utimaco/p11/libcs2_pkcs11.so
+RUN pushd /opt/utimaco/p11/ && ln -s libcs_pkcs11_R2.so libcs2_pkcs11.so && popd
 
 RUN mkdir -p /opt/{etc,bin}
 ADD files/main.sh /opt/bin/
