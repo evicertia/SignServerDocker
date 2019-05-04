@@ -31,6 +31,12 @@ RUN ln -s /opt/signserver/lib/signserver.ear \
 ADD files/signserver-ds.xml /var/lib/jbossas/server/default/deploy/signserver-ds.xml
 ADD files/signserver.settings /etc/sysconfig/signserver
 
+# Install utimaco pkcs11 files
+
+RUN mkdir -p /opt/utimaco/p11
+ADD files/libcs_pkcs11* /opt/utimaco/p11/
+RUN ln -s /opt/utimaco/p11/libcs_pkcs11_R2.so /opt/utimaco/p11/libcs2_pkcs11.so
+
 RUN mkdir -p /opt/{etc,bin}
 ADD files/main.sh /opt/bin/
 RUN chmod u+x /opt/bin/*
@@ -42,6 +48,8 @@ VOLUME /data
 #ENV JAVA_HOME=/opt/jre1.8.0_181
 ENV JAVA_OPTS=
 ENV SIGNSERVER_NODEID=
+ENV CRYPTOSERVER=3001@127.0.0.1
+ENV CS_AUTH_KEYS=/data/hsm.key
 
 EXPOSE 8080
 EXPOSE 8009
