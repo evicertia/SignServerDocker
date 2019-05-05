@@ -30,6 +30,7 @@ setup_server () {
 setup_pkcs11 () {
 	[ "${CRYPTOSERVER:-}" != "" ] || die 2 "Missing CRYPTOSERVER env variable."
 	sed -i'' -e "s/CRYPTOSERVER/${CRYPTOSERVER}/" /opt/utimaco/p11/libcs_pkcs11_R2.cfg
+	sed -i'' -e "s/CS_PKCS11_LOGLEVEL/${CS_PKCS11_LOGLEVEL:-3}/" /opt/utimaco/p11/libcs_pkcs11_R2.cfg
 	export CS_PKCS11_R2_CFG=/opt/utimaco/p11/libcs_pkcs11_R2.cfg
 }
 
@@ -40,7 +41,7 @@ case "${CMD}" in
   server)
 	setup_pkcs11
 	setup_server
-	exec /var/lib/jbossas/bin/run.sh -c default -b 0.0.0.0
+	exec /var/lib/jbossas/bin/run.sh -c default -b 0.0.0.0 "$@"
 	;;
   shell)
 	setup_pkcs11

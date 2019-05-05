@@ -25,17 +25,22 @@ ADD files/server.xml /var/lib/jbossas/server/default/deploy/jbossweb.sar/server.
 ADD files/netway-extras.repo /etc/yum.repos.d/
 
 RUN yum -y --enablerepo=netway-extras \
-	install signserver-client-3.4.1evi-2945.17.noarch signserver-server-3.4.1evi-2945.17.noarch
+	install signserver-client-3.4.1evi-2946.17.noarch signserver-server-3.4.1evi-2946.17.noarch
 RUN ln -s /opt/signserver/lib/signserver.ear \
 	  /var/lib/jbossas/server/default/deploy/signserver.ear
 ADD files/signserver-ds.xml /var/lib/jbossas/server/default/deploy/signserver-ds.xml
 ADD files/signserver.settings /etc/sysconfig/signserver
 
-# Install utimaco pkcs11 files
+# Install utimaco pkcs11 driver & support files
 
-RUN mkdir -p /opt/utimaco/p11
+RUN mkdir -p /opt/utimaco/lib64 /opt/utimaco/p11
 ADD files/libcs_pkcs11* /opt/utimaco/p11/
-RUN pushd /opt/utimaco/p11/ && ln -s libcs_pkcs11_R2.so libcs2_pkcs11.so && popd
+ADD files/libgcc_s.so.1 files/libstdc++.so.6.0.22 /opt/utimaco/lib64/
+RUN \
+	ln -s libcs_pkcs11_R2.so /opt/utimaco/p11/libcs2_pkcs11.so && \
+	ln -s libstdc++.so.6.0.22 /opt/utimaco/lib64/libstdc++.so.6 && \
+	echo /opt/utimaco/lib64 > /etc/ld.so.conf.d/utimaco-pkcs11.conf && \
+	ldconfig
 
 RUN mkdir -p /opt/{etc,bin}
 ADD files/main.sh /opt/bin/
@@ -49,7 +54,8 @@ VOLUME /data
 ENV JAVA_OPTS=
 ENV SIGNSERVER_NODEID=
 ENV CRYPTOSERVER=3001@127.0.0.1
-ENV CS_AUTH_KEYS=/data/hsm.key
+ENV CS_AUTH_KEYS=/data/hsm.keys
+ENV CS_PKCS11_LOGLEVEL=
 
 EXPOSE 8080
 EXPOSE 8009
