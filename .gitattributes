@@ -1,0 +1,25 @@
+# These files are text and should be normalized (convert crlf =&gt; lf)
+*.cs         text diff=csharp
+*.xaml       text
+*.csproj     text
+*.sln        text
+*.tt         text
+*.ps1        text
+*.cmd        text
+*.msbuild    text
+*.md         text
+*.cshtml     text
+*.html       text
+*.js         text
+*.config     text
+*.initrc     text eol=lf
+*.sysconfig  text eol=lf
+*.spec       text eol=lf
+*.sh         text eol=lf
+Makefile     text eol=lf
+
+# Images should be treated as binary
+# (binary is a macro for -text -diff)
+*.png        binary
+*.jepg       binary
+*.sdf        binary
