@@ -20,7 +20,8 @@ RUN yum -y --enablerepo=jpackage install glassfish-javamail jbossas-5.1.0-30.jpp
 
 ADD files/server.xml /var/lib/jbossas/server/default/deploy/jbossweb.sar/server.xml
 
-RUN sed -i 's/<constructor><parameter><inject bean="BootstrapProfileFactory" property="attachmentStoreRoot" \/><\/parameter><\/constructor>/<constructor><parameter class="java.io.File"><inject bean="BootstrapProfileFactory" property="attachmentStoreRoot" \/><\/parameter><\/constructor>/g'  /var/lib/jbossas/server/default/conf/bootstrap/profile.xml
+#RUN sed -i 's|<constructor><parameter><inject bean="BootstrapProfileFactory" property="attachmentStoreRoot" /></parameter></constructor>|<constructor><parameter class="java.io.File"><inject bean="BootstrapProfileFactory" property="attachmentStoreRoot" /></parameter></constructor>|g'  /var/lib/jbossas/server/default/conf/bootstrap/profile.xml
+RUN sed -ri 's|<parameter>(<inject bean="BootstrapProfileFactory" property="attachmentStoreRoot" />)|<parameter class="java.io.File">\1|g' /var/lib/jbossas/server/default/conf/bootstrap/profile.xml
 
 # Install signserver packages from netway-extras
 
