@@ -28,7 +28,7 @@ RUN sed -ri 's|<parameter>(<inject bean="BootstrapProfileFactory" property="atta
 ADD files/netway-extras.repo /etc/yum.repos.d/
 
 RUN yum -y --enablerepo=netway-extras \
-	install signserver-client-3.4.1evi-2946.17.noarch signserver-server-3.4.1evi-2946.17.noarch
+	install signserver-client-3.4.1evi-2954.19.noarch signserver-server-3.4.1evi-2954.19.noarch
 RUN ln -s /opt/signserver/lib/signserver.ear \
 	  /var/lib/jbossas/server/default/deploy/signserver.ear
 ADD files/signserver-ds.xml /var/lib/jbossas/server/default/deploy/signserver-ds.xml
