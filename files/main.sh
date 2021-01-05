@@ -17,13 +17,14 @@ die () {
 }
 
 setup_server () {
-	[ -z "$SIGNSERVER_NODEID" ] && die 1 "Missing SIGNSERVER_NODEID environment variable.."
-	[ -d /data/db ] || mkdir -p /data/db
-	pushd /opt/jboss/wildfly/standalone > /dev/null
+	cat >| /etc/signserver/signserver.conf <<-_EOF
+	SIGNSERVER_NODEID = ${SIGNSERVER_NODEID:-localhost}
+	_EOF
+	pushd /var/lib/jbossas/server/default
 	rm -f log
 	mkdir -p /data/logs
 	ln -s /data/logs log
-	popd > /dev/null
+	popd
 }
 
 setup_pkcs11 () {
@@ -42,14 +43,14 @@ case "${CMD}" in
   server)
 	setup_pkcs11
 	setup_server
-	exec /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 "$@"
+	exec /var/lib/jbossas/bin/run.sh -c default -b 0.0.0.0 "$@"
 	;;
   shell)
 	setup_pkcs11
 	exec /bin/bash "$@"
 	;;
   '')
-	die 254 "Unknown command (available commands: server, shell)"
+	die 254 "Unknown command (available commands: server)"
 	;;
   *)
 	die 255 "Invalid command: ${CMD}"
@@ -58,4 +59,5 @@ esac
 
 exit $?
 
+#exec "$@" || exit $?
 # vim: ai ts=4 sw=4 noet sts=4 ft=sh
