@@ -1,0 +1,58 @@
+Changes applied to standard config using jboss-cli.sh -c:
+
+ -> Enabled remoting at :4447
+
+    /subsystem=remoting/http-connector=http-remoting-connector:write-attribute(name=connector-ref,value=remoting)
+    /socket-binding-group=standard-sockets/socket-binding=remoting:add(port=4447,interface=management)
+    /subsystem=undertow/server=default-server/http-listener=remoting:add(socket-binding=remoting,enable-http2=true)
+    /subsystem=infinispan/cache-container=ejb:remove()
+    /subsystem=infinispan/cache-container=server:remove()
+    /subsystem=infinispan/cache-container=web:remove()
+    /subsystem=ejb3/cache=distributable:remove()
+    /subsystem=ejb3/passivation-store=infinispan:remove()
+    :reload
+
+ -> Tuned HTTP behavior
+
+    /system-property=org.apache.catalina.connector.URI_ENCODING:add(value="UTF-8")
+    /system-property=org.apache.catalina.connector.USE_BODY_ENCODING_FOR_QUERY_STRING:add(value=true)
+    /system-property=org.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH:add(value=true)
+    /system-property=org.apache.tomcat.util.http.Parameters.MAX_COUNT:add(value=2048)
+    /system-property=org.apache.catalina.connector.CoyoteAdapter.ALLOW_BACKSLASH:add(value=true)
+    /subsystem=webservices:write-attribute(name=wsdl-host, value=jbossws.undefined.host)
+    /subsystem=webservices:write-attribute(name=modify-wsdl-address, value=true)
+    :reload
+
+ -> Removed default welcome page
+
+    /subsystem=undertow/server=default-server/host=default-host/location="\/":remove()
+    /subsystem=undertow/configuration=handler/file=welcome-content:remove()
+    :reload
+
+ -> Remove ExampleDS DataSource
+
+    /subsystem=ee/service=default-bindings:remove()
+    data-source remove --name=ExampleDS
+    :reload
+    
+ -> Remove unneded stuff
+
+    /subsystem=jdr:remove()
+    /subsystem=sar:remove()
+    /subsystem=jmx:remove()
+    /subsystem=pojo:remove()
+    /subsystem=ee-security:remove()
+    /subsystem=microprofile-config-smallrye:remove()
+    /subsystem=microprofile-health-smallrye:remove()
+    /subsystem=microprofile-opentracing-smallrye:remove()
+    /extension=org.jboss.as.jdr:remove()
+    /extension=org.jboss.as.jmx:remove()
+    /extension=org.jboss.as.sar:remove()
+    /extension=org.jboss.as.pojo:remove()
+    /extension=org.wildfly.extension.ee-security:remove()
+    /extension=org.wildfly.extension.microprofile.config-smallrye:remove()
+    /extension=org.wildfly.extension.microprofile.health-smallrye:remove()
+    /extension=org.wildfly.extension.microprofile.opentracing-smallrye:remove()
+    :reload
+   
+ 
