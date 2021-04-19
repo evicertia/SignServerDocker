@@ -32,7 +32,8 @@ RUN cd $SIGNSERVER_HOME/conf \
 	&& sed -i'' -re 's|^#(database.nodb.location)=.*|\1=/data/db|g' signserver_deploy.properties \
 	&& sed -i'' -re 's/^(#)?(validationws.enabled)=.*/\2=true/g' signserver_deploy.properties \
 	&& sed -i'' -re 's/^(#)?(module.statusproperties.enabled)=.*/\2=true/g' signserver_deploy.properties \
-	&& sed -i'' -re 's/^(#)?(module.signerstatusreport.enabled)=.*/\2=true/g' signserver_deploy.properties
+	&& sed -i'' -re 's/^(#)?(module.signerstatusreport.enabled)=.*/\2=true/g' signserver_deploy.properties \
+	&& sed -i'' -re 's/^(#)?(healthcheck.authorizedips)=.*/\2=ANY/g' signserver_deploy.properties
 
 # Deploy signserver to appsrv..
 RUN $SIGNSERVER_HOME/bin/ant deploy
