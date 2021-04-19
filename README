@@ -8,8 +8,8 @@ SignServer docker image files.
 * Push/Publish: docker push evicertia/evicertia/signserver
 * Run: docker run -it --rm evicertia/signserver server
 * Run (as daemon): docker run -dt --net=host --rm --name signserver evicertia/signserver server
-** A volumed named '/data' may be specified in order to locally persist simulator's database/files:
-*** docker run -dt --volume /local/path:/data --net=host --rm --name utimaco-cssim evicertia/signserver server
+** A volumed named '/data' may be specified in order to locally persist configuration files:
+*** docker run -dt --volume /local/path:/data --net=host --rm evicertia/signserver server
 ** SignServer listens by default at 8080, which can be exposed by passing -p 8080:8080 to docker run:
-*** docker run -dt -p 8080:8080 --rm --name utimaco-cssim evicertia/signserver server
+*** docker run -dt -p 8080:8080 --rm evicertia/signserver server
 
