@@ -28,7 +28,7 @@ setup_server () {
 
 setup_pkcs11 () {
 	[ "${CRYPTOSERVER:-}" != "" ] || die 2 "Missing CRYPTOSERVER env variable."
-	sed -i'' -e "s/CRYPTOSERVER/${CRYPTOSERVER}/" /opt/utimaco/p11/libcs_pkcs11_R2.cfg
+	sed -i'' -e "s|CRYPTOSERVER|${CRYPTOSERVER}|" /opt/utimaco/p11/libcs_pkcs11_R2.cfg
 	sed -i'' -e "s/CS_PKCS11_LOGLEVEL/${CS_PKCS11_LOGLEVEL:-3}/" /opt/utimaco/p11/libcs_pkcs11_R2.cfg
 	sed -i'' -e "s/^KeepAlive = .*$/KeepAlive = ${CS_PKCS11_KEEPALIVE:-true}/" /opt/utimaco/p11/libcs_pkcs11_R2.cfg
 	sed -i'' -e "s/^SlotMultiSession = .*$/SlotMultiSession = ${CS_PKCS11_KEEPALIVE:-false}/" /opt/utimaco/p11/libcs_pkcs11_R2.cfg
