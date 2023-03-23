@@ -13,3 +13,4 @@ SignServer docker image files.
 ** SignServer listens by default at 8080, which can be exposed by passing -p 8080:8080 to docker run:
 *** docker run -dt -p 8080:8080 --rm --name utimaco-cssim evicertia/signserver server
 
+
