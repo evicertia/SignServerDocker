@@ -6,6 +6,10 @@ LABEL vendor="evicertia"
 
 WORKDIR /data
 
+# Enable vault repositories..
+
+ADD files/centos6-vault.repo /etc/yum.repos.d/CentOS-Base.repo
+
 # Install base stuff..
 
 RUN yum -y install openssl ca-certificates redhat-lsb-core epel-release yum-priorities

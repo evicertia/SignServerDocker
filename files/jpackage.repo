@@ -1,6 +1,7 @@
 [jpackage]
 name=JPackage 6 generic
-mirrorlist=http://www.jpackage.org/mirrorlist.php?dist=generic&type=free&release=6.0
+#mirrorlist=http://www.jpackage.org/mirrorlist.php?dist=generic&type=free&release=6.0
+baseurl=http://mirrors.ibiblio.org/jpackage/6.0/generic/free/
 failovermethod=priority
 enabled=0
 gpgcheck=0
