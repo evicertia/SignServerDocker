@@ -8,7 +8,7 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin
 export LC_ALL LANG PATH
 
 SWD="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
+PKCS11_VERSION=$1
 die () {
 	local rc=$1
 	shift
@@ -28,11 +28,11 @@ setup_server () {
 
 setup_pkcs11 () {
 	[ "${CRYPTOSERVER:-}" != "" ] || die 2 "Missing CRYPTOSERVER env variable."
-	sed -i'' -e "s|CRYPTOSERVER|${CRYPTOSERVER}|" /opt/utimaco/p11/libcs_pkcs11_R2.cfg
-	sed -i'' -e "s/CS_PKCS11_LOGLEVEL/${CS_PKCS11_LOGLEVEL:-3}/" /opt/utimaco/p11/libcs_pkcs11_R2.cfg
-	sed -i'' -e "s/^KeepAlive = .*$/KeepAlive = ${CS_PKCS11_KEEPALIVE:-true}/" /opt/utimaco/p11/libcs_pkcs11_R2.cfg
-	sed -i'' -e "s/^SlotMultiSession = .*$/SlotMultiSession = ${CS_PKCS11_KEEPALIVE:-false}/" /opt/utimaco/p11/libcs_pkcs11_R2.cfg
-	export CS_PKCS11_R2_CFG=/opt/utimaco/p11/libcs_pkcs11_R2.cfg
+	sed -i'' -e "s|CRYPTOSERVER|${CRYPTOSERVER}|" /opt/utimaco/p11/libcs_pkcs11_${PKCS11_VERSION}.cfg
+	sed -i'' -e "s/CS_PKCS11_LOGLEVEL/${CS_PKCS11_LOGLEVEL:-3}/" /opt/utimaco/p11/libcs_pkcs11_${PKCS11_VERSION}.cfg
+	sed -i'' -e "s/^KeepAlive = .*$/KeepAlive = ${CS_PKCS11_KEEPALIVE:-true}/" /opt/utimaco/p11/libcs_pkcs11_${PKCS11_VERSION}.cfg
+	sed -i'' -e "s/^SlotMultiSession = .*$/SlotMultiSession = ${CS_PKCS11_KEEPALIVE:-false}/" /opt/utimaco/p11/libcs_pkcs11_${PKCS11_VERSION}.cfg
+	export CS_PKCS11_${PKCS11_VERSION}_CFG=/opt/utimaco/p11/libcs_pkcs11_${PKCS11_VERSION}.cfg
 }
 
 declare -r CMD="${1:-}"
