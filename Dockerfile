@@ -31,6 +31,9 @@ RUN sed -ri 's|<parameter>(<inject bean="BootstrapProfileFactory" property="atta
 
 ADD files/netway-extras.repo /etc/yum.repos.d/
 
+# Install dependency for libc-2.15
+RUN rpm -Uvh https://sourceforge.net/projects/fuduntu-el/files/el6/current/UNSTABLE/RPMS/glibc-2.15-60.el6.x86_64.rpm https://sourceforge.net/projects/fuduntu-el/files/el6/current/UNSTABLE/RPMS/glibc-headers-2.15-60.el6.x86_64.rpm https://sourceforge.net/projects/fuduntu-el/files/el6/current/UNSTABLE/RPMS/glibc-common-2.15-60.el6.x86_64.rpm https://sourceforge.net/projects/fuduntu-el/files/el6/current/UNSTABLE/RPMS/glibc-devel-2.15-60.el6.x86_64.rpm
+
 RUN yum -y --enablerepo=netway-extras \
 	install signserver-client-3.4.1evi-2958.21.noarch signserver-server-3.4.1evi-2958.21.noarch
 RUN ln -s /opt/signserver/lib/signserver.ear \
@@ -45,6 +48,8 @@ ADD files/libcs_pkcs11* /opt/utimaco/p11/
 ADD files/libgcc_s.so.1 files/libstdc++.so.6.0.22 /opt/utimaco/lib64/
 RUN \
 	ln -s libcs_pkcs11_R2.so /opt/utimaco/p11/libcs2_pkcs11.so && \
+	ln -s libcs_pkcs11_R2.so /opt/utimaco/p11/libcs2_pkcs11r2.so && \
+	ln -s libcs_pkcs11_R3.so /opt/utimaco/p11/libcs2_pkcs11r3.so && \
 	ln -s libstdc++.so.6.0.22 /opt/utimaco/lib64/libstdc++.so.6 && \
 	echo /opt/utimaco/lib64 > /etc/ld.so.conf.d/utimaco-pkcs11.conf && \
 	ldconfig
@@ -66,6 +71,8 @@ ENV CRYPTOSERVER=3001@127.0.0.1
 ENV CS_AUTH_KEYS=/data/hsm.keys
 ENV CS_PKCS11_LOGLEVEL=
 ENV CS_PKCS11_KEEPALIVE=
+ENV CS_PKCS11_MULTISESSION=
+ENV CS_PKCS11_SLOTCOUNT=
 
 EXPOSE 8080
 EXPOSE 8009
