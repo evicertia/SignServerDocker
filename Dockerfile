@@ -46,6 +46,8 @@ RUN mkdir -p /opt/utimaco/lib64 /opt/utimaco/p11
 ADD files/libcs_pkcs11* /opt/utimaco/p11/
 RUN \
 	ln -s libcs_pkcs11_R2.so /opt/utimaco/p11/libcs2_pkcs11.so && \
+	ln -s libcs_pkcs11_R2.so /opt/utimaco/p11/libcs2_pkcs11r2.so && \
+	ln -s libcs_pkcs11_R3.so /opt/utimaco/p11/libcs2_pkcs11r3.so && \
 	echo /opt/utimaco/lib64 > /etc/ld.so.conf.d/utimaco-pkcs11.conf && \
 	ldconfig
 
@@ -60,6 +62,8 @@ ENV CRYPTOSERVER=3001@127.0.0.1
 ENV CS_AUTH_KEYS=/data/hsm.keys
 ENV CS_PKCS11_LOGLEVEL=
 ENV CS_PKCS11_KEEPALIVE=
+ENV CS_PKCS11_MULTISESSION=
+ENV CS_PKCS11_SLOTCOUNT=
 
 EXPOSE 8080
 EXPOSE 8009
