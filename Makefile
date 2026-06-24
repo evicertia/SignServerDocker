@@ -2,9 +2,10 @@ NAME   := evicertia/signserver
 TAG    := $$(git log -1 --pretty=%h)
 IMG    := ${NAME}:${TAG}
 LATEST := ${NAME}:latest
+PLAT   := linux/amd64
 
 build:
-	@docker build -t ${IMG} .
+	@docker build --platform $(PLAT) -t ${IMG} .
 	@docker tag ${IMG} ${LATEST}
 
 push:

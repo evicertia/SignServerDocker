@@ -35,7 +35,7 @@ ADD files/netway-extras.repo /etc/yum.repos.d/
 RUN rpm -Uvh https://sourceforge.net/projects/fuduntu-el/files/el6/current/UNSTABLE/RPMS/glibc-2.15-60.el6.x86_64.rpm https://sourceforge.net/projects/fuduntu-el/files/el6/current/UNSTABLE/RPMS/glibc-headers-2.15-60.el6.x86_64.rpm https://sourceforge.net/projects/fuduntu-el/files/el6/current/UNSTABLE/RPMS/glibc-common-2.15-60.el6.x86_64.rpm https://sourceforge.net/projects/fuduntu-el/files/el6/current/UNSTABLE/RPMS/glibc-devel-2.15-60.el6.x86_64.rpm
 
 RUN yum -y --enablerepo=netway-extras \
-	install signserver-client-3.4.1evi-2958.21.noarch signserver-server-3.4.1evi-2958.21.noarch
+	install signserver-client-3.4.1evi-2959.21.noarch signserver-server-3.4.1evi-2959.21.noarch
 RUN ln -s /opt/signserver/lib/signserver.ear \
 	  /var/lib/jbossas/server/default/deploy/signserver.ear
 ADD files/signserver-ds.xml /var/lib/jbossas/server/default/deploy/signserver-ds.xml
