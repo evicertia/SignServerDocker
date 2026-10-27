@@ -14,6 +14,11 @@ ENV APPSRV_HOME /opt/jboss/wildfly
 
 USER root
 
+# Enable vault repositories (since mirrorlist.centos.org was retired)
+RUN sed -i s/mirror.centos.org/vault.centos.org/g /etc/yum.repos.d/CentOS-*.repo && \
+    sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/CentOS-*.repo && \
+    sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/CentOS-*.repo
+
 # Install base stuff..
 RUN yum -y install openssl ca-certificates redhat-lsb-core yum-priorities ant
 
