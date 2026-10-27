@@ -6,3 +6,4 @@ enabled=0
 gpgcheck=1
 gpgkey=https://dev.crt0.net/packages/netway/NW-GPG-KEY
 priority=10
+sslverify=0
